@@ -1,0 +1,60 @@
+# Data Containers
+# Used to link local working directories to running containers
+version: '2'
+services:
+
+  # symlink local working directories to directories within docker containers
+  # $PWD references your local running directory since Docker volumes require absolute paths
+  server-data:
+    image: 'tianon/true:latest'
+    volumes:
+      - $PWD/www:/data
+
+  #User Service
+  stylepoints:
+    image: 'node:latest'
+    ports:
+      - '3000:3000'
+    working_dir: /data
+    command: npm start
+    environment:
+      - 'SERVER_TYPE=stylepoints'
+      - VIRTUAL_HOST=local.stylepoints.com
+    volumes_from:
+      - server-data
+
+  publisher1:
+    image: 'node:latest'
+    ports:
+      - '3001:3000'
+    working_dir: /data
+    command: npm start
+    environment:
+      - 'SERVER_TYPE=publisher1'
+      - VIRTUAL_HOST=local.publisher1.com
+    volumes_from:
+      - server-data
+    
+  publisher2:
+    image: 'node:latest'
+    ports:
+      - '3002:3000'
+    working_dir: /data
+    command: npm start
+    environment:
+      - SERVER_TYPE=publisher2
+      - VIRTUAL_HOST=local.publisher2.com
+    volumes_from:
+      - server-data
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+
+
+

@@ -1,0 +1,9 @@
+html
+    head
+        base(target="_parent")
+        link(href='http://local.stylepoints.com/stylepoints.css', rel='stylesheet')
+    body(styles="background-color:blue")
+        a(href="http://local.stylepoints.com?session="+req.session.id)
+            div stylepoints widget
+            div session_id: #{req.session.id}
+
