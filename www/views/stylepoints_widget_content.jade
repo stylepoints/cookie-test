@@ -1,0 +1,10 @@
+html
+    head
+        base(target="_parent")
+        link(href='http://local.stylepoints.com/stylepoints.css', rel='stylesheet')
+    body(styles="background-color:blue")
+        a(href="http://local.stylepoints.com?stylepoints_session="+req.session.id+'&publisher_session='+req.query.publisher_session+'&publisher_name='+req.query.publisher_name)
+            div stylepoints widget
+            div stylepoints user #{req.session.id}
+
+
