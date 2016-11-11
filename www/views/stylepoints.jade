@@ -1,9 +1,12 @@
 html
     head
         base(target="_parent")
-        link(href='http://local.stylepoints.com/stylepoints.css', rel='stylesheet')
-    body(styles="background-color:blue")
-        a(href="http://local.stylepoints.com?session="+req.session.id)
-            div stylepoints widget
-            div session_id: #{req.session.id}
+    body  
+        include ./header.jade      
+        h3 Stylepoints main site
+        p Welcome stylepoints user #{req.session.id}
+        if(req.query.publisher_name)
+            p You have come from #{req.query.publisher_name}
+                if(req.query.publisher_session)
+                |  as user #{req.query.publisher_session}
 
